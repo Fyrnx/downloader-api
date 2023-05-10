@@ -31,4 +31,6 @@ let server = http.createServer((req,res) => {
     }
 })
 
-server.listen(2600)
+server.listen(process.env.PORT || 6000,_ => {
+    console.log(`runing on port ${process.env.PORT || 6000}`)
+})
