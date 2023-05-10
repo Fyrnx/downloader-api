@@ -6,6 +6,7 @@ async function GetImage(url) {
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
         protocol.get(url,res => {
+            res.setHeader('Access-Control-Allow-Origin', '*');
             let raw = []
             res.on('data',chunk => {
                 raw.push(chunk)
