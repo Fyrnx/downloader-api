@@ -13,7 +13,7 @@ async function GetImage(url) {
             let raw = []
             res.on('data',chunk => {
                 raw.push(chunk)
-            })
+            })s
             res.on('end',_ => {
                 if(raw.length > 0) {
                     raw = Buffer.concat(raw)
