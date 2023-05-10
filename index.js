@@ -6,7 +6,6 @@ async function GetImage(url) {
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
         protocol.get(url,res => {
-            res.setHeader('Access-Control-Allow-Origin', '*');
             let raw = []
             res.on('data',chunk => {
                 raw.push(chunk)
@@ -20,6 +19,7 @@ async function GetImage(url) {
 }
 
 let server = http.createServer((req,res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if(req.url == '/') { 
         res.write('please inter image url')
         res.end()
@@ -32,6 +32,6 @@ let server = http.createServer((req,res) => {
     }
 })
 
-server.listen(process.env.PORT || 6000,_ => {
-    console.log(`runing on port ${process.env.PORT || 6000}`)
+server.listen(process.env.PORT || 2600,_ => {
+    console.log(`runing on port ${process.env.PORT || 2600}`)
 })
