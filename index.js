@@ -2,33 +2,44 @@ let http = require('http')
 let https = require('https')
 
 async function GetImage(url) {
-    return await new Promise(resolve =>  {
+    return await new Promise((resolve,reject) =>  {
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
-        protocol.get(url,res => {
-            let raw = []
-            res.on('data',chunk => {
-                raw.push(chunk)
-            })
-            res.on('end',_ => {
+            protocol.get(url,res => {
+                let raw = []
+                res.on('data',chunk => {
+                    raw.push(chunk)
+                })
+                res.on('end',_ => {
                     raw = Buffer.concat(raw)
                     resolve(raw)
-            })
-        })
+                })
+            }).on("error", (err) => {
+                reject()
+            });
     })
 }
 
 let server = http.createServer((req,res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     if(req.url == '/') { 
-        res.write('please inter image url')
+        res.write('please inter image url with (read / check) ')
         res.end()
-    } else { 
-        let url = req.url.slice(1)
-        GetImage(url).then(data => {
+    } else if(/\/read/.test(req.url)) { 
+        let url = new URL(`http://${req.url}`)
+        let q = url.searchParams.get('q')
+
+        GetImage(q).then(data => {
             res.write(data)
             res.end()
+        }, err => {
+            res.write('url didn\'t send data')
+            res.end()
         })
+
+    } else { 
+        res.write(`there is not ${req.url.slice(1)} please use (read / check)`)
+        res.end()
     }
 })
 
