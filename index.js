@@ -54,7 +54,7 @@ let server = http.createServer((req,res) => {
         let q = url.searchParams.get('q')
 
         CheckUrl(q).then(result => { 
-            res.write(result)
+            res.write(result.toString())
             res.end()
         })
     } else { 
