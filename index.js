@@ -25,9 +25,9 @@ async function CheckUrl(url) {
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
             protocol.get(url,_ => {
-                resolve(true)
+                resolve()
             }).on("error", (err) => {
-                resolve(false)
+                reject()
             });
     })
 }
@@ -53,8 +53,11 @@ let server = http.createServer((req,res) => {
         let url = new URL(`http://${req.url}`)
         let q = url.searchParams.get('q')
 
-        CheckUrl(q).then(result => { 
-            res.write(result.toString())
+        CheckUrl(q).then(_ => { 
+            res.write('true')
+            res.end()
+        },_ => { 
+            res.write('false')
             res.end()
         })
     } else { 
