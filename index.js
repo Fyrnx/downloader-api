@@ -4,19 +4,6 @@ let fs = require('fs')
 let path = require('path')
 
 
-let test_png = fs.readFileSync('./test.png')
-let urlpng = `https://www.hempsons.co.uk/app/uploads/2022/10/youtube-play-red-logo-png-transparent-background-6-1.png`
-let urljpg = `https://www.shutterstock.com/image-photo/surreal-image-african-elephant-wearing-260nw-1365289022.jpg`
-CheckUrl(urlpng,'image',true).then(x => {
-    console.log(
-        true
-    );
-},y => { 
-    console.log( 
-        false
-    );
-})
-
 async function GetUrl(url) {
     return await new Promise((resolve,reject) =>  {
         let protocol = http
@@ -85,7 +72,7 @@ async function CheckUrl(url,type,group = false) {
     }
 
     return await new Promise((resolve,reject) =>  {
-        if(type == undefined) {reject();console.log('red');}
+        if(type == undefined) {reject()}
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
             protocol.get(url,res => {
@@ -102,7 +89,7 @@ async function CheckUrl(url,type,group = false) {
                                 match = true
                             }
                         })
-                        if(match) {resolve()} else {reject() ;console.log('green');}
+                        if(match) {resolve()} else {reject()}
                     } else {
                         let buffer_code =  test_file['global'][type]
                         console.log(type,test_file,test_file['global'],test_file['global'][type]);
@@ -111,7 +98,7 @@ async function CheckUrl(url,type,group = false) {
                                 resolve()
                             }
                         } else { 
-                            reject() ;console.log('purple');
+                            reject()
                         }
                     }
                 })
@@ -121,7 +108,7 @@ async function CheckUrl(url,type,group = false) {
 
 
             }).on("error", (err) => {
-                reject();console.log('blue');
+                reject()
             });
     })
 }
