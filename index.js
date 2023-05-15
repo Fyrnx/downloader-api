@@ -39,6 +39,40 @@ async function CheckUrl(url,type,group = false) {
 
 
     function checkbuffer(buffer,buffercode) { 
+        if(buffer == undefined) {return false}
+
+        if(Array.isArray(buffercode)) { 
+            let match = false
+            buffercode.forEach(code => {
+                let buffer_code = code.toLowerCase().replace(/\s/ig,'')
+                let hex = buffer.toString('hex').slice(0,buffer_code.length)
+
+                if(/\?/ig.test(buffer_code)) { 
+                    let remove = RemoveAny(buffer_code,hex)
+                    buffer_code = remove[0]
+                    hex = remove[1]
+                }
+
+                if(hex == buffer_code) {
+                    match = true
+                }
+            })
+
+            return match
+        } else { 
+            let buffer_code = buffercode.toLowerCase().replace(/\s/ig,'')
+            let hex = buffer.toString('hex').slice(0,buffer_code.length) == buffer_code
+
+            if(/\?/ig.test(buffer_code)) { 
+                let remove = RemoveAny(buffer_code,hex)
+                buffer_code = remove[0]
+                hex = remove[1]
+            }
+
+            return hex == buffer_code
+        }
+    }
+
         if(Array.isArray(buffercode)) { 
             let match = false
             buffercode.forEach(code => {
