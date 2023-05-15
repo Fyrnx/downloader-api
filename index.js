@@ -145,7 +145,7 @@ async function CheckUrl(url,type,group = false) {
                 reject()
             });
     })
-}
+
 
 let server = http.createServer((req,res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
