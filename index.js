@@ -103,9 +103,8 @@ async function CheckUrl(url,type,group = false) {
 
             return hex == buffer_code
         }
-    }
 
-    return await new Promise((resolve,reject) =>  {
+        return await new Promise((resolve,reject) =>  {
         if(type == undefined) {reject()}
         let protocol = http
         if(/https.*/ig.test(url)) {protocol = https}
@@ -145,7 +144,7 @@ async function CheckUrl(url,type,group = false) {
                 reject()
             });
     })
-
+}
 
 let server = http.createServer((req,res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
