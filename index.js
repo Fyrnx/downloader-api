@@ -114,7 +114,7 @@ async function CheckUrl(url,type,group = false) {
                 test_file = JSON.parse(test_file.toString())
                 res.on('data', data => raw.push(data))
                 res.on('end', _ => { 
-                    if(group) {
+                    if(group != false) {
                         let the_group = test_file['groups'][type]
                         let match = false
                         the_group.forEach(ext => { 
